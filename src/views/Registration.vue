@@ -12,13 +12,19 @@
                             name: 'login',
                         }">Need an account?</router-link>
                     </p>
-                    Validation errors
+
+                    <pf-validation-errors
+                        v-if="validationErrors"
+                        :validation-errors="validationErrors"
+                    />
+
                     <form @submit.prevent="onSubmit">
                         <fieldset class="form-group">
                             <input
                                 type="text"
                                 class="form-control form-control-lg"
                                 placeholder="Username"
+                                v-model="username"
                             />
                         </fieldset>
 
@@ -27,6 +33,7 @@
                                 type="text"
                                 class="form-control form-control-lg"
                                 placeholder="Email"
+                                v-model="email"
                             />
                         </fieldset>
 
@@ -35,10 +42,14 @@
                                 type="password"
                                 class="form-control form-control-lg"
                                 placeholder="Password"
+                                v-model="password"
                             />
                         </fieldset>
 
-                        <button class="btn btn-lg btn-primary pull-xs-right">
+                        <button
+                            class="btn btn-lg btn-primary pull-xs-right"
+                            :disabled="isSubmitting"
+                        >
                             Sign up
                         </button>
                     </form>
@@ -49,12 +60,37 @@
 </template>
 
 <script>
+import PfValidationErrors from '@/components/ValidationErrors';
+
 export default {
     name: "PostRegistration",
+    components: {
+        PfValidationErrors,
+    },
+    data: () => ({
+        email: '',
+        password: '',
+        username: '',
+    }),
+    computed: {
+        isSubmitting() {
+            return this.$store.state.auth.isSubmitting;
+        },
+        validationErrors() {
+            return this.$store.state.auth.validationErrors;
+        }
+    },
     methods: {
         onSubmit() {
-            console.log('submitted');
-        }
+            this.$store.dispatch('register', {
+                username: this.username,
+                email: this.email,
+                password: this.password,
+            })
+                .then(() => {
+                    this.$router.push({ name: 'home' });
+                })
+        },
     }
 }
 </script>
