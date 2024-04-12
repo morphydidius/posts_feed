@@ -4,13 +4,13 @@
             <div class="row">
                 <div class="col-md-6 offset-md-3 col-xs-12">
                     <h1 class="text-xs-center">
-                        Sign up
+                        Sign in
                     </h1>
 
                     <p class="text-xs-center">
                         <router-link :to="{
-                            name: 'login',
-                        }">Have an account?</router-link>
+                            name: 'registration',
+                        }">Need an account?</router-link>
                     </p>
 
                     <pf-validation-errors
@@ -19,15 +19,6 @@
                     />
 
                     <form @submit.prevent="onSubmit">
-                        <fieldset class="form-group">
-                            <input
-                                type="text"
-                                class="form-control form-control-lg"
-                                placeholder="Username"
-                                v-model="username"
-                            />
-                        </fieldset>
-
                         <fieldset class="form-group">
                             <input
                                 type="text"
@@ -50,7 +41,7 @@
                             class="btn btn-lg btn-primary pull-xs-right"
                             :disabled="isSubmitting"
                         >
-                            Sign up
+                            Sign in
                         </button>
                     </form>
                 </div>
@@ -60,19 +51,18 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import PfValidationErrors from '@/components/ValidationErrors';
 import { actionTypes } from '@/store/modules/auth';
-import { mapState } from 'vuex';
 
 export default {
-    name: "PostRegistration",
+    name: "PostLogin",
     components: {
         PfValidationErrors,
     },
     data: () => ({
         email: '',
         password: '',
-        username: '',
     }),
     computed: mapState({
         isSubmitting: state => state.auth.isSubmitting,
@@ -80,8 +70,7 @@ export default {
     }),
     methods: {
         onSubmit() {
-            this.$store.dispatch(actionTypes.register, {
-                username: this.username,
+            this.$store.dispatch(actionTypes.login, {
                 email: this.email,
                 password: this.password,
             })

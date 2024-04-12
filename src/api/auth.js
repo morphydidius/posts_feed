@@ -6,6 +6,13 @@ const register = credentials => {
     });
 };
 
+const login = credentials => {
+    return axios.post('/users/login', {
+        user: credentials,
+    });
+}
+
 export default {
     register,
+    login,
 };
