@@ -6,10 +6,15 @@
 
 <script>
 import PfHeaderBar from './components/HeaderBar';
+import { actionTypes } from '@/store/modules/auth';
+
 export default {
     name: 'HomePage',
     components: {
         PfHeaderBar,
+    },
+    mounted() {
+        this.$store.dispatch(actionTypes.getCurrentUser);
     },
 }
 </script>
