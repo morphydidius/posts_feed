@@ -18,6 +18,21 @@ const routes = [
     path: '/registration',
     name: 'registration',
     component: PostRegistration,
+  },
+  {
+    path: '/create-article',
+    name: 'createArticle',
+    component: PostLogin,
+  },
+  {
+    path: '/settings',
+    name: 'settings',
+    component: PostLogin,
+  },
+  {
+    path: '/user',
+    name: 'userProfile',
+    component: PostLogin,
   }
 ]
 

@@ -1,12 +1,16 @@
 <template>
-    <div>hello</div>
+    <PfHeaderBar />
+
     <router-view></router-view>
 </template>
 
 <script>
-
+import PfHeaderBar from './components/HeaderBar';
 export default {
     name: 'HomePage',
+    components: {
+        PfHeaderBar,
+    },
 }
 </script>
 
