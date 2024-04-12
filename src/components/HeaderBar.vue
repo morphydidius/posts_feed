@@ -55,7 +55,7 @@
                         </li>
                     </template>
 
-                    <template v-else>
+                    <template v-if="isAnonymous">
                         <li class="nav-item">
                             <router-link
                                 class="nav-link"
@@ -72,8 +72,6 @@
                             >Sing up</router-link>
                         </li>
                     </template>
-
-
                 </ul>
             </div>
         </nav>
@@ -81,13 +79,17 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
+import { getterTypes } from '@/store/modules/auth';
 
 export default {
     name: 'PfHeaderBar',
-    computed: mapState({
-        isLoggedIn: state => !!state.auth.isLoggedIn,
-        currentUser: state => state.auth.currentUser,
-    }),
+    computed: {
+        ...mapGetters({
+            currentUser: getterTypes.currentUser,
+            isLoggedIn: getterTypes.isLoggedIn,
+            isAnonymous: getterTypes.isAnonymous,
+        }),
+    },
 }
 </script>

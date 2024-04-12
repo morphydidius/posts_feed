@@ -8,6 +8,18 @@ const state = {
     isLoggedIn: null,
 };
 
+export const getterTypes = {
+    currentUser: '[auth] currentUser',
+    isLoggedIn: '[auth] isLoggedIn',
+    isAnonymous: '[auth] isAnonymous',
+};
+
+const getters = {
+    [getterTypes.currentUser]: (state) => state.currentUser,
+    [getterTypes.isLoggedIn]: (state) => !!state.isLoggedIn,
+    [getterTypes.isAnonymous]: (state) => state.isLoggedIn === false,
+};
+
 export const mutationTypes = {
     registerStart: '[auth] registerStart',
     registerSuccess: '[auth] registerSuccess',
@@ -16,11 +28,6 @@ export const mutationTypes = {
     loginSuccess: '[auth] loginSuccess',
     loginFailure: '[auth] loginFailure',
 };
-
-export const actionTypes = {
-    register: '[auth] register',
-    login: '[auth] login',
-}
 
 const mutations = {
     [mutationTypes.registerStart](state) {
@@ -52,6 +59,11 @@ const mutations = {
         state.validationErrors = payload;
     }
 };
+
+export const actionTypes = {
+    register: '[auth] register',
+    login: '[auth] login',
+}
 
 const actions = {
     [actionTypes.register](context, data) {
@@ -91,4 +103,5 @@ export default {
     state,
     mutations,
     actions,
+    getters,
 };
