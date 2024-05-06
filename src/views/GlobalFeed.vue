@@ -9,7 +9,7 @@
                 </div>
 
                 <div class="col-md-3">
-                    TAGS
+                    <pf-tags />
                 </div>
             </div>
         </div>
@@ -18,10 +18,13 @@
 
 <script>
 import PfFeed from '@/components/Feed';
+import PfTags from '@/components/Tags.vue';
 
 export default {
     name: 'PfGlobalFeed',
-    components: { PfFeed },
-    computed: {},
+    components: {
+        PfFeed,
+        PfTags,
+    },
 }
 </script>

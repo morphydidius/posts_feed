@@ -132,8 +132,6 @@ export default {
 
             const apiUrlWithParams = `${parsedUrl.url}?${stringifiedParams}`;
 
-            console.warn('PARAMS', parsedUrl, stringifiedParams);
-
             this.$store.dispatch(actionTypes.getFeed, {
                 apiUrl: apiUrlWithParams,
             });
