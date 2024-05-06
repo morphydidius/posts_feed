@@ -59,18 +59,29 @@
                     <span>Read more...</span>
                 </router-link>
             </div>
-            PAGINATION
+
+            <pf-pagination
+                :total="feed.articlesCount"
+                :limit="limit"
+                :current-page="currentPage"
+                :url="baseUrl"
+            ></pf-pagination>
         </div>
     </div>
 </template>
 
 <script>
-import feedApiUrls from '@/maps/feedApiUrls';
-import { actionTypes } from '@/store/modules/feed';
 import { mapState } from 'vuex';
+import { feedApiUrls, postsPerPage } from '@/constants/feed';
+import { actionTypes } from '@/store/modules/feed';
+import PfPagination from '@/components/Pagination';
+import queryString from 'query-string';
 
 export default {
     name: 'PfFeed',
+    components: {
+        PfPagination,
+    },
     computed: {
         ...mapState({
             isLoading: state => state.feed.isLoading,
@@ -80,6 +91,18 @@ export default {
         feedApiUrl() {
             return feedApiUrls[this.type] || feedApiUrls['global'];
         },
+        limit() {
+            return postsPerPage;
+        },
+        currentPage() {
+            return Number(this.$route.query.page || '1');
+        },
+        baseUrl() {
+            return this.$route.path;
+        },
+        offset() {
+            return this.currentPage * this.limit - this.limit;
+        },
     },
     props: {
         type: {
@@ -87,10 +110,34 @@ export default {
             required: true,
         },
     },
-    mounted() {
-        this.$store.dispatch(actionTypes.getFeed, {
-            apiUrl: this.feedApiUrl,
-        });
+    watch: {
+        currentPage: {
+            handler() {
+                this.fetchFeed();
+            },
+        }
     },
+    mounted() {
+        this.fetchFeed();
+    },
+    methods: {
+        fetchFeed() {
+            const parsedUrl = queryString.parseUrl(this.feedApiUrl);
+
+            const stringifiedParams = queryString.stringify({
+                limit: this.limit,
+                offset: this.offset,
+                ...parsedUrl.query,
+            });
+
+            const apiUrlWithParams = `${parsedUrl.url}?${stringifiedParams}`;
+
+            console.warn('PARAMS', parsedUrl, stringifiedParams);
+
+            this.$store.dispatch(actionTypes.getFeed, {
+                apiUrl: apiUrlWithParams,
+            });
+        },
+    }
 }
 </script>
