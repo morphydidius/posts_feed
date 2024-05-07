@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div v-if="isLoading">Loading...</div>
+        <pf-loader v-if="isLoading" />
 
-        <div v-if="error">Error :(</div>
+        <pf-error-message v-if="error" />
 
         <div v-if="feed">
             <div
@@ -75,12 +75,16 @@ import { mapState } from 'vuex';
 import { feedApiUrls, postsPerPage } from '@/constants/feed';
 import { actionTypes } from '@/store/modules/feed';
 import PfPagination from '@/components/Pagination';
+import PfLoader from '@/components/Loader';
+import PfErrorMessage from '@/components/ErrorMessage';
 import queryString from 'query-string';
 
 export default {
     name: 'PfFeed',
     components: {
         PfPagination,
+        PfLoader,
+        PfErrorMessage,
     },
     computed: {
         ...mapState({

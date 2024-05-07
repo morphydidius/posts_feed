@@ -1,6 +1,6 @@
 <template>
     <div class="home-page">
-        <div>BANNER</div>
+        <pf-banner />
 
         <div class="container page">
             <div class="row">
@@ -18,13 +18,15 @@
 
 <script>
 import PfFeed from '@/components/Feed';
-import PfTags from '@/components/Tags.vue';
+import PfTags from '@/components/Tags';
+import PfBanner from '@/components/Banner';
 
 export default {
     name: 'PfGlobalFeed',
     components: {
         PfFeed,
         PfTags,
+        PfBanner,
     },
 }
 </script>

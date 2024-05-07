@@ -2,8 +2,9 @@
     <div class="sidebar">
         <p>Popular Tags</p>
 
-        <div v-if="isLoading">Loading...</div>
-        <div v-if="error">Error</div>
+        <pf-loader v-if="isLoading" />
+
+        <pf-error-message v-if="error" />
 
         <div v-if="tags" class="taglist">
             <router-link
@@ -26,10 +27,15 @@
 <script>
 import { mapState } from 'vuex';
 import { actionTypes } from '@/store/modules/tags';
+import PfLoader from '@/components/Loader';
+import PfErrorMessage from '@/components/ErrorMessage';
 
 export default {
     name: 'PfTags',
-    components: {},
+    components: {
+        PfLoader,
+        PfErrorMessage,
+    },
     computed: {
         ...mapState({
             isLoading: state => state.tags.isLoading,
