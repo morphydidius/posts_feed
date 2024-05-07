@@ -5,6 +5,8 @@
         <div class="container page">
             <div class="row">
                 <div class="col-md-9">
+                    <pf-feed-navigation />
+
                     <pf-feed type="tags"></pf-feed>
                 </div>
 
@@ -20,10 +22,12 @@
 import PfFeed from '@/components/Feed';
 import PfTags from '@/components/Tags';
 import PfBanner from '@/components/Banner';
+import PfFeedNavigation from '@/components/FeedNavigation';
 
 export default {
     name: 'PfTagsFeed',
     components: {
+        PfFeedNavigation,
         PfFeed,
         PfTags,
         PfBanner,

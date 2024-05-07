@@ -107,6 +107,9 @@ export default {
         offset() {
             return this.currentPage * this.limit - this.limit;
         },
+        tagName() {
+            return this.$route.params.slug || '';
+        },
     },
     props: {
         type: {
@@ -119,6 +122,13 @@ export default {
             handler() {
                 this.fetchFeed();
             },
+        },
+        tagName: {
+            handler(value) {
+                if (value) {
+                    this.fetchFeed();
+                }
+            }
         }
     },
     mounted() {
@@ -150,6 +160,6 @@ export default {
                 apiUrl: apiUrlWithParams,
             });
         },
-    }
+    },
 }
 </script>

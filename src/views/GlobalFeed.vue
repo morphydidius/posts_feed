@@ -5,6 +5,8 @@
         <div class="container page">
             <div class="row">
                 <div class="col-md-9">
+                    <pf-feed-navigation />
+
                     <pf-feed type="global"></pf-feed>
                 </div>
 
@@ -20,6 +22,7 @@
 import PfFeed from '@/components/Feed';
 import PfTags from '@/components/Tags';
 import PfBanner from '@/components/Banner';
+import PfFeedNavigation from '@/components/FeedNavigation';
 
 export default {
     name: 'PfGlobalFeed',
@@ -27,6 +30,7 @@ export default {
         PfFeed,
         PfTags,
         PfBanner,
+        PfFeedNavigation,
     },
 }
 </script>
