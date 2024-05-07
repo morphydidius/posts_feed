@@ -128,11 +128,21 @@ export default {
         fetchFeed() {
             const parsedUrl = queryString.parseUrl(this.feedApiUrl);
 
-            const stringifiedParams = queryString.stringify({
+            const params = {
                 limit: this.limit,
                 offset: this.offset,
                 ...parsedUrl.query,
-            });
+            };
+
+            if (this.type === 'tags') {
+                const chosenTag = this.$route.params.slug;
+
+                if (chosenTag) {
+                    params.tag = chosenTag;
+                }
+            }
+
+            const stringifiedParams = queryString.stringify(params);
 
             const apiUrlWithParams = `${parsedUrl.url}?${stringifiedParams}`;
 

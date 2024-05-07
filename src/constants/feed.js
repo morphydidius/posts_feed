@@ -1,7 +1,7 @@
 export const feedApiUrls = {
     global: '/articles',
-    user: '',
-    tag: '',
+    user: '/articles/feed',
+    tags: '/articles',
 };
 
 export const postsPerPage = 10;

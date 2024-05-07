@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import GlobalFeed from '@/views/GlobalFeed';
+import UserFeed from '@/views/UserFeed';
+import TagsFeed from '@/views/TagsFeed';
 import PostRegistration from '@/views/Registration';
 import PostLogin from '@/views/Login';
 
@@ -11,13 +13,13 @@ const routes = [
     },
     {
         path: '/feed',
-        name: 'yourFeed',
-        component: GlobalFeed,
+        name: 'userFeed',
+        component: UserFeed,
     },
     {
         path: '/tags/:slug',
         name: 'tag',
-        component: GlobalFeed,
+        component: TagsFeed,
     },
     {
         path: '/articles/new',
