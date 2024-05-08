@@ -6,6 +6,7 @@
                 class="container"
             >
                 <h1>{{ article.title }}</h1>
+
                 <div class="article-meta">
                     <router-link
                         :to="{
@@ -36,24 +37,29 @@
                         </span>
                     </div>
 
-                    <router-link
-                        :to="{
-                            name: 'editArticle',
-                            params: {
-                                slug: article.slug,
-                            }
-                        }"
-                        class="btn btn-outline-secondary btn-sm"
-                    >
-                        <i class="ion-edit"></i>
+                    <span v-if="isAuthor">
+                        <router-link
+                            :to="{
+                                name: 'editArticle',
+                                params: {
+                                    slug: article.slug,
+                                }
+                            }"
+                            class="btn btn-outline-secondary btn-sm mr-4"
+                        >
+                            <i class="ion-edit"></i>
 
-                        <span>Edit Article</span>
-                    </router-link>
+                            <span>Edit Article</span>
+                        </router-link>
 
-                    <button class="btn btn-outline-danger btn-sm">
-                        <i class="ion-trash-a"></i>
-                        <span>Delete Article</span>
-                    </button>
+                        <button
+                            class="btn btn-outline-danger btn-sm"
+                            @click="deleteArticle"
+                        >
+                            <i class="ion-trash-a"></i>
+                            <span>Delete Article</span>
+                        </button>
+                    </span>
                 </div>
             </div>
         </div>
@@ -79,9 +85,10 @@
 </template>
 
 <script>
-import { actionTypes } from '@/store/modules/article';
-import { mapState } from 'vuex';
-import PfLoader from '@/components/Loader'
+import { actionTypes as articleActionTypes } from '@/store/modules/article';
+import { getterTypes as authGetterTypes } from '@/store/modules/auth';
+import { mapState, mapGetters  } from 'vuex';
+import PfLoader from '@/components/Loader';
 import PfErrorMessage from '@/components/ErrorMessage';
 
 export default {
@@ -96,11 +103,36 @@ export default {
             article: state => state.article.data,
             error: state => state.article.error,
         }),
+        ...mapGetters({
+            currentUser: authGetterTypes.currentUser,
+        }),
+        isAuthor() {
+            if (!this.article || !this.currentUser) {
+                return false;
+            }
+            return this.article.author.username === this.currentUser.username;
+        },
     },
     mounted() {
-        this.$store.dispatch(actionTypes.getArticle, {
+        this.$store.dispatch(articleActionTypes.getArticle, {
             slug: this.$route.params.slug,
         });
     },
+    methods: {
+        deleteArticle() {
+            this.$store.dispatch(articleActionTypes.deleteArticle, {
+                slug: this.article.slug,
+            })
+                .then(() => {
+                    this.$router.push({ name: 'globalFeed' });
+                });
+        },
+    },
 };
 </script>
+
+<style scoped>
+.mr-4 {
+    margin-right: 4px;
+}
+</style>
