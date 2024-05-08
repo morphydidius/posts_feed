@@ -55,8 +55,12 @@
                     class="preview-link"
                 >
                     <h1>{{ article.title }}</h1>
+
                     <p>{{ article.description }}</p>
+
                     <span>Read more...</span>
+
+                    <pf-tag-list :tags="article.tagList"></pf-tag-list>
                 </router-link>
             </div>
 
@@ -77,11 +81,13 @@ import { actionTypes } from '@/store/modules/feed';
 import PfPagination from '@/components/Pagination';
 import PfLoader from '@/components/Loader';
 import PfErrorMessage from '@/components/ErrorMessage';
+import PfTagList from '@/components/TagList';
 import queryString from 'query-string';
 
 export default {
     name: 'PfFeed',
     components: {
+        PfTagList,
         PfPagination,
         PfLoader,
         PfErrorMessage,

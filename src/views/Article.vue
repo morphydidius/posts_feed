@@ -77,7 +77,8 @@
                     <div>
                         <p>{{ article.body }}</p>
                     </div>
-                    TAGLIST
+
+                    <pf-tag-list :tags="article.tagList"></pf-tag-list>
                 </div>
             </div>
         </div>
@@ -90,12 +91,14 @@ import { getterTypes as authGetterTypes } from '@/store/modules/auth';
 import { mapState, mapGetters  } from 'vuex';
 import PfLoader from '@/components/Loader';
 import PfErrorMessage from '@/components/ErrorMessage';
+import PfTagList from '@/components/TagList';
 
 export default {
     name: 'PfArticle',
     components: {
         PfErrorMessage,
         PfLoader,
+        PfTagList,
     },
     computed: {
         ...mapState({
