@@ -4,6 +4,7 @@ import UserFeed from '@/views/UserFeed';
 import TagsFeed from '@/views/TagsFeed';
 import PostRegistration from '@/views/Registration';
 import PostLogin from '@/views/Login';
+import Article from '@/views/Article';
 
 const routes = [
     {
@@ -29,7 +30,7 @@ const routes = [
     {
         path: '/articles/:slug',
         name: 'article',
-        component: GlobalFeed,
+        component: Article,
     },
     {
         path: '/articles/:slug/edit',
