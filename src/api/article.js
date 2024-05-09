@@ -5,15 +5,12 @@ export const getArticle = (articleName) => {
         .then(response => response.data.article);
 };
 
-export const createArticle = ({ body, description, tagList, title }) => {
-    return axios.post('/articles', {
-        article: {
-            body,
-            description,
-            tagList,
-            title,
-        }
-    })
+export const createArticle = articleFields => {
+    return axios
+        .post('/articles', {
+            article: articleFields,
+        })
+        .then(response => response.data.article);
 };
 
 export const deleteArticle = slug => {
