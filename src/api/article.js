@@ -13,6 +13,13 @@ export const createArticle = articleFields => {
         .then(response => response.data.article);
 };
 
+export const editArticle = (slug, articleFields) => {
+    return axios.put(`/articles/${slug}`, {
+        article: articleFields,
+    })
+        .then(response => response.data.article);
+};
+
 export const deleteArticle = slug => {
     return axios.delete(`/articles/${slug}`);
 };

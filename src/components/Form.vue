@@ -3,12 +3,15 @@
         <div class="container page">
             <div class="row">
                 <div class="col-md-10 offset-md-1 col-xs-12">
+                    <pf-loader v-if="isLoading"></pf-loader>
+
                     <pf-validation-errors
                         v-if="validationErrors"
                         :validation-errors="validationErrors"
                     />
 
                     <form
+                        v-if="!isLoading"
                         @submit.prevent="onSubmit"
                     >
                         <fieldset>
@@ -66,11 +69,14 @@
 <script>
 import { mapState } from 'vuex';
 import PfValidationErrors from '@/components/ValidationErrors';
-import { actionTypes } from '@/store/modules/createArticle';
+import PfLoader from '@/components/Loader';
+import { actionTypes as createActionTypes } from '@/store/modules/createArticle';
+import { actionTypes as editActionTypes } from '@/store/modules/editArticle';
 
 export default {
     name: 'PfArticleForm',
     components: {
+        PfLoader,
         PfValidationErrors,
     },
     data() {
@@ -90,16 +96,39 @@ export default {
         }
     },
     computed: {
-        ...mapState({
-            validationErrors: state => state.createArticle.validationErrors,
-            isSubmitting: state => state.createArticle.isSubmitting,
-        }),
+        isEdit() {
+            return this.type === 'edit';
+        },
         isNew() {
             return this.type === 'new';
         },
         buttonText() {
             return this.isNew ? 'Publish article' : 'Submit';
         },
+        ...mapState({
+            validationErrors(state) {
+                return this.isNew
+                    ? state.createArticle.validationErrors
+                    : state.editArticle.validationErrors;
+            },
+            isSubmitting(state) {
+                return this.isNew
+                    ? state.createArticle.isSubmitting
+                    : state.editArticle.isSubmitting;
+            },
+            isLoading: state => state.editArticle.isLoading,
+            article: state => state.editArticle.article,
+        }),
+    },
+    mounted() {
+        if (this.isEdit) {
+            this.$store.dispatch(editActionTypes.getArticle, {
+                slug: this.$route.params.slug,
+            })
+                .then(article => {
+                    this.mergeArticleFields(article);
+                });
+        }
     },
     methods: {
         onSubmit() {
@@ -111,7 +140,20 @@ export default {
             };
 
             if (this.isNew) {
-                this.$store.dispatch(actionTypes.createArticle, form)
+                this.$store.dispatch(createActionTypes.createArticle, form)
+                    .then(article => {
+                        this.$router.push({
+                            name: 'article',
+                            params: {
+                                slug: article.slug
+                            }
+                        });
+                    });
+            } else if (this.isEdit) {
+                this.$store.dispatch(editActionTypes.editArticle, {
+                    slug: this.article.slug,
+                    articleFields: form,
+                })
                     .then(article => {
                         this.$router.push({
                             name: 'article',
@@ -122,6 +164,12 @@ export default {
                     });
             }
         },
-    }
+        mergeArticleFields({ title, description, body, tagList }) {
+            this.form.title = title;
+            this.form.description = description;
+            this.form.body = body;
+            this.form.tagList = tagList.length ? tagList.join(' ') : '';
+        },
+    },
 }
 </script>
