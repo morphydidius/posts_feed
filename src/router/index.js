@@ -7,6 +7,7 @@ import PostLogin from '@/views/Login';
 import Article from '@/views/Article';
 import CreateArticle from '@/views/CreateArticle';
 import EditArticle from '@/views/EditArticle';
+import Settings from '@/views/Settings';
 
 const routes = [
     {
@@ -52,7 +53,7 @@ const routes = [
     {
         path: '/settings',
         name: 'settings',
-        component: PostLogin,
+        component: Settings,
     },
     {
         path: '/profiles/:slug',

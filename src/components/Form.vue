@@ -107,14 +107,31 @@ export default {
         },
         ...mapState({
             validationErrors(state) {
-                return this.isNew
-                    ? state.createArticle.validationErrors
-                    : state.editArticle.validationErrors;
+                switch(this.type) {
+                    case 'new':
+                        return state.createArticle.validationErrors;
+                    case 'edit':
+                        return state.editArticle.validationErrors;
+                    case 'settings':
+                        return null;
+                }
+                // return this.isNew
+                //     ? state.createArticle.validationErrors
+                //     : state.editArticle.validationErrors;
             },
             isSubmitting(state) {
-                return this.isNew
-                    ? state.createArticle.isSubmitting
-                    : state.editArticle.isSubmitting;
+                switch(this.type) {
+                    case 'new':
+                        return state.createArticle.isSubmitting;
+                    case 'edit':
+                        return state.editArticle.isSubmitting;
+                    case 'settings':
+                        return null;
+                }
+
+                // return this.isNew
+                //     ? state.createArticle.isSubmitting
+                //     : state.editArticle.isSubmitting;
             },
             isLoading: state => state.editArticle.isLoading,
             article: state => state.editArticle.article,
