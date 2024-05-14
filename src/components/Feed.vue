@@ -41,7 +41,11 @@
                     </div>
 
                     <div class="pull-xs-right">
-                        ADD TO FAVOURITES
+                        <pf-add-to-favourites
+                            :is-favourited="Boolean(article.favourited)"
+                            :article-slug="article.slug"
+                            :favourites-count="article.favoritesCount"
+                        ></pf-add-to-favourites>
                     </div>
                 </div>
 
@@ -82,6 +86,7 @@ import PfPagination from '@/components/Pagination';
 import PfLoader from '@/components/Loader';
 import PfErrorMessage from '@/components/ErrorMessage';
 import PfTagList from '@/components/TagList';
+import PfAddToFavourites from '@/components/AddToFavourites';
 import queryString from 'query-string';
 
 export default {
@@ -91,6 +96,7 @@ export default {
         PfPagination,
         PfLoader,
         PfErrorMessage,
+        PfAddToFavourites,
     },
     computed: {
         ...mapState({
