@@ -105,6 +105,13 @@ export default {
             error: state => state.feed.error,
         }),
         feedApiUrl() {
+            if (this.type === 'profile') {
+                const isFavorites = this.baseUrl.includes('favorites');
+                const urlParam = isFavorites ? 'favorites' : 'author';
+
+                return `${feedApiUrls[this.type]}?${urlParam}=${this.slugParam}`;
+            }
+
             return feedApiUrls[this.type] || feedApiUrls['global'];
         },
         limit() {
@@ -119,7 +126,7 @@ export default {
         offset() {
             return this.currentPage * this.limit - this.limit;
         },
-        tagName() {
+        slugParam() {
             return this.$route.params.slug || '';
         },
     },
@@ -135,11 +142,16 @@ export default {
                 this.fetchFeed();
             },
         },
-        tagName: {
+        slugParam: {
             handler(value) {
                 if (value) {
                     this.fetchFeed();
                 }
+            }
+        },
+        '$route.name': {
+            handler() {
+                this.fetchFeed();
             }
         }
     },
