@@ -1,6 +1,6 @@
 # Posts Feed: лента постов
 
-> Клон [Conduit](https://conduit.realworld.how) на Vue.js с использованием Vue CLI, Vuex
+> Клон [Conduit](https://conduit.realworld.how) на Vue.js с использованием Vue CLI, Vuex  
 > API: [RealWorld](https://realworld-docs.netlify.app/docs/specs/frontend-specs/api)
 
 ## Установка
