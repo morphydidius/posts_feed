@@ -1,24 +1,20 @@
-# postpage
+# Posts Feed: лента постов
 
-## Project setup
+> Клон [Conduit](https://conduit.realworld.how) на Vue.js с использованием Vue CLI, Vuex
+> API: [RealWorld](https://realworld-docs.netlify.app/docs/specs/frontend-specs/api)
+
+## Установка
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Запуск режима разработки с hot-reload (http://localhost:8080/)
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Build & minify для прода
 ```
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).

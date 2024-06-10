@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory } from 'vue-router';
 import GlobalFeed from '@/views/GlobalFeed';
 import UserFeed from '@/views/UserFeed';
 import TagsFeed from '@/views/TagsFeed';
@@ -69,7 +69,7 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
+    history: createWebHashHistory(),
     routes,
 });
 
